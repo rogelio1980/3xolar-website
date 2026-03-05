@@ -3092,10 +3092,10 @@ olar.com — Mockup Visual</title>
 
   @media (max-width: 900px) {
     .hero-content { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
-    .hero-left h1 { font-size: 2.8rem; }
-    .hero { padding: 7rem 2rem 3rem; }
-    section { padding: 4rem 2rem; }
+    .hero-right { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 2rem; }
+    .hero-left h1 { font-size: 2.4rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
     .benefits-grid { grid-template-columns: 1fr; }
     .calculator-container { grid-template-columns: 1fr; }
     .testimonials-grid { grid-template-columns: 1fr; }
@@ -3104,7 +3104,31 @@ olar.com — Mockup Visual</title>
     .footer-content { grid-template-columns: 1fr 1fr; gap: 2rem; }
     nav { display: none; }
     header { padding: 0.8rem 1.5rem; }
+    .ef-wrap { width: 100%; max-width: 440px; }
+    .ef-mid-row { max-width: 100%; }
+    .ef-node-panels { width: 110px; }
+    .ef-node-bat { width: 110px; }
+    .ef-node-inv { max-width: 148px; }
+    .ef-bidir-wrap { width: 38px; }
+    .ef-node-loads { max-width: 100%; }
+    .ef-h-row { max-width: 340px; }
   }
+
+  @media (max-width: 480px) {
+    .ef-wrap { transform: scale(0.78); transform-origin: top center; margin-bottom: -4rem; }
+    .hero-left h1 { font-size: 2rem; letter-spacing: -1px; }
+    .hero-stats { gap: 1rem; }
+    .stat-number { font-size: 1.7rem; }
+    .footer-content { grid-template-columns: 1fr; }
+  }
+
+  /* Zoom / viewport robustness */
+  html { overflow-x: hidden; }
+  body { overflow-x: hidden; min-width: 320px; }
+  .hero-content, .benefits-grid, .calculator-container, .testimonials-grid, .blog-grid {
+    box-sizing: border-box; width: 100%;
+  }
+  section { box-sizing: border-box; }
 </style>
 </head>
 <body>
@@ -3340,7 +3364,7 @@ olar.com — Mockup Visual</title>
       <div class="benefit-icon">👥</div>
       <h3>Empoderamiento Social</h3>
       <p>Generamos empleo local, capacitación técnica y acceso a energía limpia en comunidades vulnerables.</p>
-      <span class="benefit-tag">+200 familias impactadas</span>
+      <span class="benefit-tag">+ familias impactadas</span>
     </div>
   </div>
 </section>
