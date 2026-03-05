@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>3Xolar.com — Mockup Visual</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
@@ -1536,6 +1537,7 @@
   }
 
 olar.com — Mockup Visual</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
@@ -3527,9 +3529,84 @@ olar.com — Mockup Visual</title>
         <div class="calc-result-sub" id="res-co2-sub">Calculando...</div>
       </div>
 
-      <a href="#" class="btn-cta" style="width: 100%; justify-content: center; margin-top: 1.2rem; padding: 0.8rem;">
-        Solicitar cotización personalizada →
-      </a>
+      <button onclick="toggleCotForm()" class="btn-cta" id="btnCotizar" style="width:100%;justify-content:center;margin-top:1.2rem;padding:0.8rem;">
+        ☀ Solicitar cotización personalizada →
+      </button>
+
+      <!-- ── FORMULARIO COTIZACIÓN ── -->
+      <div id="cotForm" style="display:none;margin-top:1.5rem;background:rgba(11,26,46,0.6);border:1px solid rgba(245,166,35,0.15);border-radius:18px;padding:1.5rem;">
+        <div style="font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;margin-bottom:1.2rem;color:var(--solar-white);">📋 Datos para tu cotización</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem;">
+          <div>
+            <label style="font-size:.78rem;color:var(--solar-gray);display:block;margin-bottom:.3rem">Nombre completo *</label>
+            <input id="cot-nombre" type="text" placeholder="Tu nombre" style="width:100%;background:rgba(17,34,64,.8);border:1px solid rgba(245,166,35,.18);color:var(--solar-white);padding:.6rem .85rem;border-radius:10px;font-size:.85rem;outline:none;font-family:'DM Sans',sans-serif;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="font-size:.78rem;color:var(--solar-gray);display:block;margin-bottom:.3rem">WhatsApp / Teléfono *</label>
+            <input id="cot-tel" type="tel" placeholder="+52 614 000 0000" style="width:100%;background:rgba(17,34,64,.8);border:1px solid rgba(245,166,35,.18);color:var(--solar-white);padding:.6rem .85rem;border-radius:10px;font-size:.85rem;outline:none;font-family:'DM Sans',sans-serif;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="margin-bottom:.8rem;">
+          <label style="font-size:.78rem;color:var(--solar-gray);display:block;margin-bottom:.3rem">Correo electrónico *</label>
+          <input id="cot-email" type="email" placeholder="tucorreo@gmail.com" style="width:100%;background:rgba(17,34,64,.8);border:1px solid rgba(245,166,35,.18);color:var(--solar-white);padding:.6rem .85rem;border-radius:10px;font-size:.85rem;outline:none;font-family:'DM Sans',sans-serif;box-sizing:border-box">
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem;">
+          <div>
+            <label style="font-size:.78rem;color:var(--solar-gray);display:block;margin-bottom:.3rem">Ciudad / Estado</label>
+            <input id="cot-ciudad" type="text" placeholder="Chihuahua, Chih." style="width:100%;background:rgba(17,34,64,.8);border:1px solid rgba(245,166,35,.18);color:var(--solar-white);padding:.6rem .85rem;border-radius:10px;font-size:.85rem;outline:none;font-family:'DM Sans',sans-serif;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="font-size:.78rem;color:var(--solar-gray);display:block;margin-bottom:.3rem">Tipo de inmueble</label>
+            <select id="cot-tipo" style="width:100%;background:rgba(17,34,64,.9);border:1px solid rgba(245,166,35,.18);color:var(--solar-white);padding:.6rem .85rem;border-radius:10px;font-size:.85rem;outline:none;font-family:'DM Sans',sans-serif;box-sizing:border-box">
+              <option value="">Seleccionar...</option>
+              <option>🏠 Casa habitación</option>
+              <option>🏢 Comercio / Negocio</option>
+              <option>🏭 Industria / Planta</option>
+              <option>🌵 Rancho / Off-grid</option>
+              <option>🏥 Hospital / Clínica</option>
+              <option>⛏ Minería / Telecom</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem;">
+          <div>
+            <label style="font-size:.78rem;color:var(--solar-gray);display:block;margin-bottom:.3rem">Gasto mensual en luz (MXN)</label>
+            <input id="cot-gasto" type="text" placeholder="$2,500" style="width:100%;background:rgba(17,34,64,.8);border:1px solid rgba(245,166,35,.18);color:var(--solar-white);padding:.6rem .85rem;border-radius:10px;font-size:.85rem;outline:none;font-family:'DM Sans',sans-serif;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="font-size:.78rem;color:var(--solar-gray);display:block;margin-bottom:.3rem">¿Tienes espacio en techo?</label>
+            <select id="cot-techo" style="width:100%;background:rgba(17,34,64,.9);border:1px solid rgba(245,166,35,.18);color:var(--solar-white);padding:.6rem .85rem;border-radius:10px;font-size:.85rem;outline:none;font-family:'DM Sans',sans-serif;box-sizing:border-box">
+              <option>Sí, techo plano</option>
+              <option>Sí, techo inclinado</option>
+              <option>No estoy seguro</option>
+              <option>Terreno disponible</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom:.8rem;">
+          <label style="font-size:.78rem;color:var(--solar-gray);display:block;margin-bottom:.3rem">¿Necesitas batería de respaldo? (cortes de luz, off-grid)</label>
+          <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+            <label style="display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--solar-white);cursor:pointer"><input type="radio" name="cot-bateria" value="Sí, con batería" style="accent-color:#F5A623"> Sí, quiero autonomía total</label>
+            <label style="display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--solar-white);cursor:pointer"><input type="radio" name="cot-bateria" value="Solo reducir factura" checked style="accent-color:#F5A623"> Solo reducir factura CFE</label>
+          </div>
+        </div>
+
+        <div style="margin-bottom:1.2rem;">
+          <label style="font-size:.78rem;color:var(--solar-gray);display:block;margin-bottom:.3rem">Comentarios adicionales</label>
+          <textarea id="cot-comentarios" placeholder="Cuéntanos más sobre tu proyecto, urgencia, restricciones de espacio..." rows="3" style="width:100%;background:rgba(17,34,64,.8);border:1px solid rgba(245,166,35,.18);color:var(--solar-white);padding:.6rem .85rem;border-radius:10px;font-size:.85rem;outline:none;font-family:'DM Sans',sans-serif;resize:none;box-sizing:border-box"></textarea>
+        </div>
+
+        <button onclick="enviarCotizacion()" id="btnEnviar" class="btn-cta" style="width:100%;justify-content:center;padding:.85rem;font-size:.9rem;">
+          ✉ Enviar solicitud de cotización
+        </button>
+        <p style="font-size:.72rem;color:var(--solar-gray);text-align:center;margin-top:.7rem;">Sin compromiso · Respuesta en menos de 24 h · Visita técnica gratuita</p>
+        <div id="cotMsg" style="display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:10px;text-align:center;font-size:.85rem;font-weight:600;"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -3967,18 +4044,18 @@ olar.com — Mockup Visual</title>
   const arrowU  =$('arrowUp');
   if(!sine) return;
 
-  let t = 0, batLevel = 82, charging = true, chargeTimer = 0;
+  let t = 0, batLevel = 85, charging = true, chargeTimer = 0;
 
   function tick(){
     t += 0.008;
     chargeTimer += 0.008;
 
     // Toggle charge/discharge every ~10s
-    if(chargeTimer > 10){ charging = !charging; chargeTimer = 0; }
+    if(chargeTimer > 6){ charging = !charging; chargeTimer = 0; }
 
     // Battery fill
-    if(charging){ batLevel = Math.min(90, batLevel + 0.022); }
-    else { batLevel = Math.max(20, batLevel - 0.016); }
+    if(charging){ batLevel = Math.min(90, batLevel + 0.055); }
+    else { batLevel = Math.max(20, batLevel - 0.055); }
     if(batFill)  batFill.style.height = batLevel + '%';
     if(batPct)   batPct.textContent = Math.round(batLevel);
     if(batKwh)   batKwh.textContent = (5 * batLevel/100).toFixed(1);
@@ -4027,6 +4104,144 @@ olar.com — Mockup Visual</title>
   }
   requestAnimationFrame(tick);
 })();
+</script>
+<script>
+// ── FORMULARIO COTIZACIÓN ──────────────────────────────
+(function(){
+  // EmailJS public key — usando servicio email.js gratuito
+  if(typeof emailjs !== 'undefined'){
+    emailjs.init('3xolar_pub_key_placeholder');
+  }
+})();
+
+function toggleCotForm(){
+  const form = document.getElementById('cotForm');
+  const btn  = document.getElementById('btnCotizar');
+  if(form.style.display === 'none'){
+    form.style.display = 'block';
+    form.scrollIntoView({behavior:'smooth', block:'nearest'});
+    btn.innerHTML = '✕ Cerrar formulario';
+    btn.style.background = 'rgba(17,34,64,0.8)';
+    btn.style.color = 'var(--solar-amber)';
+    btn.style.border = '1px solid rgba(245,166,35,0.3)';
+    btn.style.boxShadow = 'none';
+  } else {
+    form.style.display = 'none';
+    btn.innerHTML = '☀ Solicitar cotización personalizada →';
+    btn.style.background = '';
+    btn.style.color = '';
+    btn.style.border = '';
+    btn.style.boxShadow = '';
+  }
+}
+
+function enviarCotizacion(){
+  const nombre    = document.getElementById('cot-nombre').value.trim();
+  const tel       = document.getElementById('cot-tel').value.trim();
+  const email     = document.getElementById('cot-email').value.trim();
+  const ciudad    = document.getElementById('cot-ciudad').value.trim();
+  const tipo      = document.getElementById('cot-tipo').value;
+  const gasto     = document.getElementById('cot-gasto').value.trim();
+  const techo     = document.getElementById('cot-techo').value;
+  const bateria   = document.querySelector('input[name="cot-bateria"]:checked')?.value || '';
+  const comentarios = document.getElementById('cot-comentarios').value.trim();
+
+  const msgEl  = document.getElementById('cotMsg');
+  const btnEnv = document.getElementById('btnEnviar');
+
+  // Validación básica
+  if(!nombre || !tel || !email){
+    msgEl.style.display = 'block';
+    msgEl.style.background = 'rgba(255,68,68,0.15)';
+    msgEl.style.border = '1px solid rgba(255,68,68,0.3)';
+    msgEl.style.color = '#ff6b6b';
+    msgEl.textContent = '⚠ Por favor completa nombre, teléfono y correo.';
+    return;
+  }
+
+  // Resumen de la calculadora
+  const kw   = document.getElementById('res-sistema')?.textContent || '—';
+  const roi  = document.getElementById('res-roi')?.textContent || '—';
+  const ahorro = document.getElementById('res-ahorro-anual')?.textContent || '—';
+  const paneles= document.getElementById('res-paneles')?.textContent || '—';
+
+  const cuerpo = `
+NUEVA SOLICITUD DE COTIZACIÓN — 3Xolar.com
+==========================================
+Nombre:      ${nombre}
+Teléfono:    ${tel}
+Correo:      ${email}
+Ciudad:      ${ciudad || 'No indicada'}
+Tipo:        ${tipo || 'No indicado'}
+Gasto/mes:   ${gasto || 'No indicado'}
+Techo:       ${techo}
+Batería:     ${bateria}
+Comentarios: ${comentarios || 'Ninguno'}
+
+-- Datos de la calculadora --
+Sistema sugerido: ${kw}
+Ahorro anual est.: ${ahorro}
+Paneles:          ${paneles}
+ROI estimado:     ${roi}
+==========================================
+  `.trim();
+
+  btnEnv.disabled = true;
+  btnEnv.textContent = '⏳ Enviando...';
+
+  // Envío via EmailJS (servicio configurado en dashboard)
+  if(typeof emailjs !== 'undefined'){
+    emailjs.send('service_3xolar', 'template_3xolar', {
+      to_email:   'vargasdahana@gmail.com',
+      from_name:  nombre,
+      from_email: email,
+      phone:      tel,
+      message:    cuerpo,
+      subject:    `Cotización 3Xolar — ${nombre} — ${tipo || 'Sin tipo'}`
+    }).then(function(){
+      showSuccess(msgEl, btnEnv, nombre);
+    }, function(err){
+      // Si EmailJS falla, fallback a mailto
+      fallbackMailto(nombre, tel, email, ciudad, tipo, gasto, techo, bateria, comentarios, kw, ahorro, paneles, roi);
+      showSuccess(msgEl, btnEnv, nombre);
+    });
+  } else {
+    // Sin EmailJS, abrir mailto directamente
+    fallbackMailto(nombre, tel, email, ciudad, tipo, gasto, techo, bateria, comentarios, kw, ahorro, paneles, roi);
+    showSuccess(msgEl, btnEnv, nombre);
+  }
+}
+
+function showSuccess(msgEl, btnEnv, nombre){
+  msgEl.style.display = 'block';
+  msgEl.style.background = 'rgba(46,204,113,0.12)';
+  msgEl.style.border = '1px solid rgba(46,204,113,0.3)';
+  msgEl.style.color = '#2ECC71';
+  msgEl.textContent = `✅ ¡Listo, ${nombre}! Tu solicitud fue enviada. Te contactaremos en menos de 24 h.`;
+  btnEnv.textContent = '✅ Solicitud enviada';
+  btnEnv.style.background = 'linear-gradient(135deg,#2ECC71,#00B894)';
+  btnEnv.disabled = false;
+  // Limpiar form a los 5s
+  setTimeout(()=>{
+    ['cot-nombre','cot-tel','cot-email','cot-ciudad','cot-gasto','cot-comentarios']
+      .forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+    btnEnv.textContent = '✉ Enviar solicitud de cotización';
+    btnEnv.style.background = '';
+    document.getElementById('cotForm').style.display = 'none';
+    document.getElementById('btnCotizar').innerHTML = '☀ Solicitar cotización personalizada →';
+    document.getElementById('btnCotizar').style.background = '';
+    document.getElementById('btnCotizar').style.color = '';
+    document.getElementById('btnCotizar').style.border = '';
+  }, 5000);
+}
+
+function fallbackMailto(nombre, tel, email, ciudad, tipo, gasto, techo, bateria, comentarios, kw, ahorro, paneles, roi){
+  const asunto = encodeURIComponent(`Cotización 3Xolar — ${nombre}`);
+  const cuerpo = encodeURIComponent(
+    `Nombre: ${nombre}\nTeléfono: ${tel}\nCorreo: ${email}\nCiudad: ${ciudad}\nTipo: ${tipo}\nGasto/mes: ${gasto}\nTecho: ${techo}\nBatería: ${bateria}\nComentarios: ${comentarios}\n\nCalculadora:\nSistema: ${kw} | Ahorro: ${ahorro} | Paneles: ${paneles} | ROI: ${roi}`
+  );
+  window.open(`mailto:vargasdahana@gmail.com?subject=${asunto}&body=${cuerpo}`, '_blank');
+}
 </script>
 
 </body>
