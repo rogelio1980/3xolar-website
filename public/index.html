@@ -3977,26 +3977,26 @@ olar.com — Mockup Visual</title>
     if(chargeTimer > 10){ charging = !charging; chargeTimer = 0; }
 
     // Battery fill
-    if(charging){ batLevel = Math.min(97, batLevel + 0.018); }
-    else { batLevel = Math.max(18, batLevel - 0.012); }
+    if(charging){ batLevel = Math.min(90, batLevel + 0.022); }
+    else { batLevel = Math.max(20, batLevel - 0.016); }
     if(batFill)  batFill.style.height = batLevel + '%';
     if(batPct)   batPct.textContent = Math.round(batLevel);
     if(batKwh)   batKwh.textContent = (5 * batLevel/100).toFixed(1);
 
     // Bidirectional labels
     if(charging){
-      if(chLabel)  chLabel.textContent = 'Cargando ↓';
+      if(chLabel)  chLabel.textContent = '';
       if(disLabel) disLabel.textContent = '';
       if(lineDown) lineDown.style.opacity = '1';
-      if(lineUp)   lineUp.style.opacity = '0.2';
+      if(lineUp)   lineUp.style.opacity = '0.15';
       if(arrowD)   arrowD.style.color = 'var(--solar-green)';
-      if(arrowU)   arrowU.style.color = 'rgba(255,255,255,0.15)';
+      if(arrowU)   arrowU.style.color = 'rgba(255,255,255,0.12)';
     } else {
       if(chLabel)  chLabel.textContent = '';
-      if(disLabel) disLabel.textContent = 'Descargando ↑';
-      if(lineDown) lineDown.style.opacity = '0.2';
+      if(disLabel) disLabel.textContent = '';
+      if(lineDown) lineDown.style.opacity = '0.15';
       if(lineUp)   lineUp.style.opacity = '1';
-      if(arrowD)   arrowD.style.color = 'rgba(255,255,255,0.15)';
+      if(arrowD)   arrowD.style.color = 'rgba(255,255,255,0.12)';
       if(arrowU)   arrowU.style.color = 'var(--solar-teal)';
     }
 
