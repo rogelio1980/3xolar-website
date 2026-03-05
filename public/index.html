@@ -1380,6 +1380,7 @@
   <nav>
     <a href="#">Inicio</a>
     <a href="#">Soluciones</a>
+    <a href="#sector-salud">Sector Salud</a>
     <a href="#">Sustentabilidad</a>
     <a href="#">Blog</a>
     <a href="#">Contacto</a>
@@ -1504,18 +1505,39 @@
       <div class="section-label">Calculadora Solar</div>
       <h2 class="section-title">Simula tu ahorro<br>en segundos</h2>
       <p class="section-desc" style="margin-top: 1rem;">
-        Descubre cuánto puedes ahorrar con energía solar. Ingresa tu consumo mensual y nuestro simulador calcula el retorno de inversión estimado.
+        Descubre cuánto puedes ahorrar con energía solar. Ingresa tu consumo mensual y nuestro simulador calcula el retorno de inversión estimado con datos reales de México.
       </p>
       <div style="margin-top: 2rem;">
         <div class="calc-results-row">
           <div class="calc-mini-result">
-            <div class="mini-val">⚡ 8.5 kW</div>
+            <div class="mini-val" id="res-sistema">⚡ — kW</div>
             <div class="mini-label">Sistema sugerido</div>
           </div>
           <div class="calc-mini-result">
-            <div class="mini-val">🗓 4.2 años</div>
+            <div class="mini-val" id="res-roi">🗓 — años</div>
             <div class="mini-label">Retorno inversión</div>
           </div>
+        </div>
+        <div class="calc-results-row" style="margin-top: 1rem;">
+          <div class="calc-mini-result">
+            <div class="mini-val" id="res-paneles">🔋 — paneles</div>
+            <div class="mini-label">Paneles necesarios</div>
+          </div>
+          <div class="calc-mini-result">
+            <div class="mini-val" id="res-co2">🌿 — ton CO₂</div>
+            <div class="mini-label">CO₂ evitado/año</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breakdown desglose -->
+      <div id="cost-breakdown" style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(17,34,64,0.6); border: 1px solid rgba(245,166,35,0.1); border-radius: 16px; display: none;">
+        <div style="font-family: 'Outfit', sans-serif; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--solar-amber); margin-bottom: 1rem;">Desglose de inversión</div>
+        <div id="breakdown-lines" style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.88rem; color: var(--solar-gray);"></div>
+        <div style="height: 1px; background: rgba(245,166,35,0.1); margin: 1rem 0;"></div>
+        <div style="display: flex; justify-content: space-between; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; color: var(--solar-white);">
+          <span>Inversión total</span>
+          <span id="res-total" style="color: var(--solar-amber);">—</span>
         </div>
       </div>
     </div>
@@ -1523,35 +1545,113 @@
     <div class="calc-box">
       <div class="calc-title">⚙️ Configura tu simulación</div>
 
+      <!-- Slider consumo -->
       <div class="calc-field">
         <label>Consumo mensual de electricidad (kWh)</label>
-        <div class="calc-slider-container">
-          <span class="calc-value">850 kWh</span>
-          <input type="range" class="calc-slider" min="100" max="2000" value="850" style="background: linear-gradient(90deg, var(--solar-amber) 42%, var(--solar-navy) 42%);">
+        <div class="calc-slider-container" style="padding-top: 0.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.75rem; color: var(--solar-gray);">100 kWh</span>
+            <span class="calc-value" id="lbl-kwh" style="position: static; font-size: 1rem;">850 kWh</span>
+            <span style="font-size: 0.75rem; color: var(--solar-gray);">3,000 kWh</span>
+          </div>
+          <input type="range" id="slider-kwh" class="calc-slider" min="100" max="3000" value="850">
         </div>
       </div>
 
+      <!-- Slider gasto -->
       <div class="calc-field">
         <label>Gasto mensual en electricidad (MXN)</label>
-        <div class="calc-slider-container">
-          <span class="calc-value">$2,800</span>
-          <input type="range" class="calc-slider" min="500" max="15000" value="2800" style="background: linear-gradient(90deg, var(--solar-amber) 16%, var(--solar-navy) 16%);">
+        <div class="calc-slider-container" style="padding-top: 0.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.75rem; color: var(--solar-gray);">$500</span>
+            <span class="calc-value" id="lbl-gasto" style="position: static; font-size: 1rem;">$2,800</span>
+            <span style="font-size: 0.75rem; color: var(--solar-gray);">$20,000</span>
+          </div>
+          <input type="range" id="slider-gasto" class="calc-slider" min="500" max="20000" value="2800">
         </div>
       </div>
 
+      <!-- Tipo propiedad -->
       <div class="calc-field">
         <label>Tipo de propiedad</label>
-        <div style="display: flex; gap: 0.8rem; margin-top: 0.3rem;">
-          <span style="padding: 0.5rem 1.2rem; border-radius: 10px; background: rgba(245,166,35,0.15); border: 1px solid var(--solar-amber); color: var(--solar-amber); font-size: 0.85rem; font-weight: 600; cursor: pointer;">🏠 Residencial</span>
-          <span style="padding: 0.5rem 1.2rem; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--solar-gray); font-size: 0.85rem; font-weight: 600; cursor: pointer;">🏢 Comercial</span>
-          <span style="padding: 0.5rem 1.2rem; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--solar-gray); font-size: 0.85rem; font-weight: 600; cursor: pointer;">🏭 Industrial</span>
+        <div style="display: flex; gap: 0.6rem; margin-top: 0.4rem; flex-wrap: wrap;" id="tipo-btns">
+          <button class="tipo-btn active" data-tipo="residencial">🏠 Residencial</button>
+          <button class="tipo-btn" data-tipo="comercial">🏢 Comercial</button>
+          <button class="tipo-btn" data-tipo="industrial">🏭 Industrial</button>
         </div>
       </div>
 
-      <div class="calc-result">
+      <!-- Batería de respaldo -->
+      <div class="calc-field" style="margin-top: 0.5rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.2rem; background: rgba(0,184,148,0.07); border: 1px solid rgba(0,184,148,0.2); border-radius: 14px; cursor: pointer;" id="battery-toggle-row" onclick="toggleBattery()">
+          <div style="display: flex; align-items: center; gap: 0.8rem;">
+            <span style="font-size: 1.4rem;">🔋</span>
+            <div>
+              <div style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--solar-white);">Agregar batería de respaldo</div>
+              <div style="font-size: 0.75rem; color: var(--solar-gray); margin-top: 0.15rem;">Almacena energía para noches y cortes de luz</div>
+            </div>
+          </div>
+          <!-- Toggle switch -->
+          <div id="battery-switch" style="width: 44px; height: 24px; border-radius: 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); position: relative; transition: all 0.3s ease; flex-shrink: 0;">
+            <div id="battery-knob" style="position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--solar-gray); transition: all 0.3s ease;"></div>
+          </div>
+        </div>
+
+        <!-- Opciones de batería (ocultas por default) -->
+        <div id="battery-options" style="display: none; margin-top: 0.8rem; padding: 1.2rem; background: rgba(0,184,148,0.05); border: 1px solid rgba(0,184,148,0.15); border-radius: 14px;">
+          <div style="font-size: 0.82rem; color: var(--solar-gray); margin-bottom: 0.8rem; font-weight: 500;">Selecciona la capacidad de almacenamiento:</div>
+          <div style="display: flex; flex-direction: column; gap: 0.6rem;" id="battery-opts">
+            <label class="battery-opt" data-kwh="5" data-precio="48000">
+              <input type="radio" name="bateria" value="5" checked style="display:none">
+              <div class="battery-opt-inner">
+                <div>
+                  <div style="font-weight: 700; font-size: 0.9rem; color: var(--solar-white);">5 kWh — LiFePO₄</div>
+                  <div style="font-size: 0.75rem; color: var(--solar-gray); margin-top: 0.1rem;">~6–8 hrs respaldo básico · Hogar pequeño</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--solar-teal); font-size: 0.95rem;">$48,000</div>
+                  <div style="font-size: 0.7rem; color: var(--solar-gray);">MXN</div>
+                </div>
+              </div>
+            </label>
+            <label class="battery-opt" data-kwh="10" data-precio="88000">
+              <input type="radio" name="bateria" value="10" style="display:none">
+              <div class="battery-opt-inner">
+                <div>
+                  <div style="font-weight: 700; font-size: 0.9rem; color: var(--solar-white);">10 kWh — LiFePO₄</div>
+                  <div style="font-size: 0.75rem; color: var(--solar-gray); margin-top: 0.1rem;">~12–16 hrs respaldo · Hogar o negocio</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--solar-teal); font-size: 0.95rem;">$88,000</div>
+                  <div style="font-size: 0.7rem; color: var(--solar-gray);">MXN</div>
+                </div>
+              </div>
+            </label>
+            <label class="battery-opt" data-kwh="20" data-precio="165000">
+              <input type="radio" name="bateria" value="20" style="display:none">
+              <div class="battery-opt-inner">
+                <div>
+                  <div style="font-weight: 700; font-size: 0.9rem; color: var(--solar-white);">20 kWh — LiFePO₄</div>
+                  <div style="font-size: 0.75rem; color: var(--solar-gray); margin-top: 0.1rem;">~24 hrs completo · Comercial o crítico</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--solar-teal); font-size: 0.95rem;">$165,000</div>
+                  <div style="font-size: 0.7rem; color: var(--solar-gray);">MXN</div>
+                </div>
+              </div>
+            </label>
+          </div>
+          <div id="battery-info" style="margin-top: 0.8rem; padding: 0.7rem 1rem; background: rgba(0,184,148,0.08); border-radius: 10px; font-size: 0.8rem; color: var(--solar-teal);">
+            🔋 Con batería de <strong>5 kWh</strong> tienes aprox. <strong id="hrs-respaldo">—</strong> de respaldo nocturno o ante cortes de luz.
+          </div>
+        </div>
+      </div>
+
+      <!-- Resultado principal -->
+      <div class="calc-result" style="margin-top: 1.5rem;">
         <div class="calc-result-label">Ahorro estimado anual</div>
-        <div class="calc-result-value">$25,200 MXN</div>
-        <div class="calc-result-sub">Equivalente a 10.2 toneladas de CO₂ evitadas</div>
+        <div class="calc-result-value" id="res-ahorro-anual">$—</div>
+        <div class="calc-result-sub" id="res-co2-sub">Calculando...</div>
       </div>
 
       <a href="#" class="btn-cta" style="width: 100%; justify-content: center; margin-top: 1.2rem; padding: 0.8rem;">
@@ -1560,6 +1660,238 @@
     </div>
   </div>
 </section>
+
+<style>
+  .tipo-btn {
+    padding: 0.5rem 1.1rem;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--solar-gray);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.25s ease;
+  }
+  .tipo-btn:hover {
+    border-color: rgba(245,166,35,0.3);
+    color: var(--solar-light);
+  }
+  .tipo-btn.active {
+    background: rgba(245,166,35,0.15);
+    border-color: var(--solar-amber);
+    color: var(--solar-amber);
+  }
+  .battery-opt {
+    cursor: pointer;
+  }
+  .battery-opt-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(0,184,148,0.15);
+    background: rgba(0,184,148,0.04);
+    transition: all 0.25s ease;
+  }
+  .battery-opt:hover .battery-opt-inner {
+    border-color: rgba(0,184,148,0.35);
+    background: rgba(0,184,148,0.09);
+  }
+  .battery-opt.selected .battery-opt-inner {
+    border-color: var(--solar-teal);
+    background: rgba(0,184,148,0.12);
+    box-shadow: 0 0 0 2px rgba(0,184,148,0.15);
+  }
+  .breakdown-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .breakdown-line .val {
+    font-weight: 600;
+    color: var(--solar-light);
+  }
+</style>
+
+<script>
+(function() {
+  // ─── CONSTANTES SISTEMA SOLAR MÉXICO ───────────────
+  const HSP = 5.5;          // Horas Solar Pico promedio México
+  const PERF = 0.80;        // Factor pérdidas (inversor, temperatura, cableado)
+  const PANEL_W = 550;      // Panel estándar 550W (monocristalino)
+  const CO2_FACTOR = 0.000527; // ton CO₂/kWh (factor emisión CFE México 2024)
+  const AHORRO_PCT = 0.90;  // % de reducción en recibo con net-metering
+
+  const COSTO_KW = {
+    residencial: 22000,  // MXN por kW instalado
+    comercial:   18500,
+    industrial:  15500,
+  };
+
+  // Estado
+  let kwh = 850, gasto = 2800, tipo = 'residencial';
+  let batteryOn = false, batteryKwh = 5, batteryPrecio = 48000;
+
+  // ─── REFERENCIAS DOM ───────────────────────────────
+  const sliderKwh   = document.getElementById('slider-kwh');
+  const sliderGasto = document.getElementById('slider-gasto');
+  const lblKwh      = document.getElementById('lbl-kwh');
+  const lblGasto    = document.getElementById('lbl-gasto');
+
+  // ─── UTILS ────────────────────────────────────────
+  function fmt(n, dec=0) {
+    return new Intl.NumberFormat('es-MX', {
+      minimumFractionDigits: dec,
+      maximumFractionDigits: dec
+    }).format(n);
+  }
+  function fmtMXN(n) {
+    return '$' + fmt(Math.round(n));
+  }
+  function updateSliderTrack(el) {
+    const pct = (el.value - el.min) / (el.max - el.min) * 100;
+    el.style.background = `linear-gradient(90deg, var(--solar-amber) ${pct}%, var(--solar-navy) ${pct}%)`;
+  }
+
+  // ─── CÁLCULO PRINCIPAL ────────────────────────────
+  function calcular() {
+    // Sistema solar
+    const kw_sistema = kwh / (HSP * 30 * PERF);
+    const paneles = Math.ceil((kw_sistema * 1000) / PANEL_W);
+    const kw_real = (paneles * PANEL_W) / 1000;
+
+    // Inversión
+    const costo_solar = kw_real * COSTO_KW[tipo];
+    const costo_total = batteryOn ? costo_solar + batteryPrecio : costo_solar;
+
+    // Ahorros
+    const ahorro_mensual = gasto * AHORRO_PCT;
+    const ahorro_anual   = ahorro_mensual * 12;
+    const roi_years      = costo_total / ahorro_anual;
+
+    // CO₂
+    const co2_anual = kwh * 12 * CO2_FACTOR;
+
+    // Respaldo batería
+    const consumo_diario_kwh = kwh / 30;
+    const consumo_noche_kwh  = consumo_diario_kwh * 0.40; // ~40% nocturno
+    const hrs_respaldo = batteryOn ? (batteryKwh / consumo_noche_kwh * 24) : 0;
+
+    // ─── Actualizar UI ────────────────────────────
+    document.getElementById('res-sistema').textContent   = `⚡ ${fmt(kw_real,1)} kW`;
+    document.getElementById('res-roi').textContent       = `🗓 ${fmt(roi_years,1)} años`;
+    document.getElementById('res-paneles').textContent   = `☀️ ${paneles} paneles`;
+    document.getElementById('res-co2').textContent       = `🌿 ${fmt(co2_anual,1)} ton`;
+    document.getElementById('res-ahorro-anual').textContent = fmtMXN(ahorro_anual) + ' MXN';
+    document.getElementById('res-co2-sub').textContent   =
+      `Equivalente a ${fmt(co2_anual,1)} toneladas de CO₂ evitadas al año`;
+
+    // Desglose
+    const breakdown = document.getElementById('cost-breakdown');
+    const lines     = document.getElementById('breakdown-lines');
+    breakdown.style.display = 'block';
+
+    let html = `
+      <div class="breakdown-line"><span>Sistema solar ${fmt(kw_real,1)} kW (${paneles} paneles)</span><span class="val">${fmtMXN(costo_solar)}</span></div>
+      <div class="breakdown-line"><span>Inversor incluido</span><span class="val" style="color:var(--solar-gray)">Incluido</span></div>`;
+    if (batteryOn) {
+      html += `<div class="breakdown-line"><span>Batería LiFePO₄ ${batteryKwh} kWh</span><span class="val" style="color:var(--solar-teal)">${fmtMXN(batteryPrecio)}</span></div>`;
+    }
+    html += `<div class="breakdown-line"><span>Instalación y mano de obra</span><span class="val" style="color:var(--solar-gray)">Incluida</span></div>`;
+    lines.innerHTML = html;
+    document.getElementById('res-total').textContent = fmtMXN(costo_total) + ' MXN';
+
+    // Info batería
+    if (batteryOn) {
+      const hrs = Math.min(hrs_respaldo, 24);
+      const hrsTxt = hrs >= 24 ? '+24 horas' : `${fmt(hrs,1)} horas`;
+      document.getElementById('hrs-respaldo').textContent = hrsTxt;
+      document.getElementById('battery-info').querySelector('strong:first-child').textContent = batteryKwh + ' kWh';
+    }
+  }
+
+  // ─── SLIDERS ─────────────────────────────────────
+  sliderKwh.addEventListener('input', function() {
+    kwh = +this.value;
+    lblKwh.textContent = fmt(kwh) + ' kWh';
+    updateSliderTrack(this);
+    calcular();
+  });
+
+  sliderGasto.addEventListener('input', function() {
+    gasto = +this.value;
+    lblGasto.textContent = '$' + fmt(gasto);
+    updateSliderTrack(this);
+    calcular();
+  });
+
+  // ─── TIPO PROPIEDAD ───────────────────────────────
+  document.getElementById('tipo-btns').addEventListener('click', function(e) {
+    const btn = e.target.closest('.tipo-btn');
+    if (!btn) return;
+    document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    tipo = btn.dataset.tipo;
+    calcular();
+  });
+
+  // ─── BATERÍA ──────────────────────────────────────
+  window.toggleBattery = function() {
+    batteryOn = !batteryOn;
+    const sw    = document.getElementById('battery-switch');
+    const knob  = document.getElementById('battery-knob');
+    const opts  = document.getElementById('battery-options');
+    const row   = document.getElementById('battery-toggle-row');
+
+    if (batteryOn) {
+      sw.style.background = 'var(--solar-teal)';
+      sw.style.borderColor = 'var(--solar-teal)';
+      knob.style.transform = 'translateX(20px)';
+      knob.style.background = '#fff';
+      opts.style.display = 'block';
+      row.style.borderColor = 'rgba(0,184,148,0.4)';
+    } else {
+      sw.style.background = 'rgba(255,255,255,0.1)';
+      sw.style.borderColor = 'rgba(255,255,255,0.15)';
+      knob.style.transform = 'translateX(0)';
+      knob.style.background = 'var(--solar-gray)';
+      opts.style.display = 'none';
+      row.style.borderColor = 'rgba(0,184,148,0.2)';
+    }
+    calcular();
+  };
+
+  // Selección de capacidad de batería
+  document.addEventListener('click', function(e) {
+    const opt = e.target.closest('.battery-opt');
+    if (!opt) return;
+    document.querySelectorAll('.battery-opt').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    const radio = opt.querySelector('input[type=radio]');
+    radio.checked = true;
+    batteryKwh    = +opt.dataset.kwh;
+    batteryPrecio = +opt.dataset.precio;
+
+    // Actualizar texto info
+    const infoEl = document.getElementById('battery-info');
+    if (infoEl) {
+      infoEl.querySelector('strong:first-child').textContent = batteryKwh + ' kWh';
+    }
+    calcular();
+  });
+
+  // ─── INIT ─────────────────────────────────────────
+  updateSliderTrack(sliderKwh);
+  updateSliderTrack(sliderGasto);
+  // Seleccionar primera opción de batería
+  document.querySelector('.battery-opt').classList.add('selected');
+  calcular();
+})();
+</script>
 
 <div class="section-divider"></div>
 
@@ -1586,6 +1918,9 @@
       <div class="map-point" style="top: 28%; left: 45%;">
         <span class="tooltip">Monterrey — 85 instalaciones</span>
       </div>
+      <div class="map-point" style="top: 18%; left: 28%; background: var(--solar-gold); box-shadow: 0 0 24px rgba(255,215,0,0.7); width: 16px; height: 16px;">
+        <span class="tooltip">Chihuahua (Sede) — 62 instalaciones + Sector Salud</span>
+      </div>
       <div class="map-point" style="top: 52%; left: 42%;">
         <span class="tooltip">CDMX — 142 instalaciones</span>
       </div>
@@ -1599,4 +1934,413 @@
         <span class="tooltip">Mérida — 52 instalaciones</span>
       </div>
       <div class="map-point" style="top: 20%; left: 32%; width: 10px; height: 10px;">
-        <span class="tooltip">Chihuahua — 38 instalaciones
+        <span class="tooltip">Chihuahua — 38 instalaciones</span>
+      </div>
+      <div class="map-point" style="top: 55%; left: 35%; width: 10px; height: 10px;">
+        <span class="tooltip">Querétaro — 62 instalaciones</span>
+      </div>
+
+      <div class="map-stat-bar">
+        <div class="map-stat">
+          <div class="map-stat-val">522</div>
+          <div class="map-stat-lbl">Instalaciones</div>
+        </div>
+        <div class="map-stat">
+          <div class="map-stat-val">12.8 GWh</div>
+          <div class="map-stat-lbl">Generados</div>
+        </div>
+        <div class="map-stat">
+          <div class="map-stat-val">28</div>
+          <div class="map-stat-lbl">Estados</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Vivíamos en zona sin acceso a CFE. Con 10 paneles, batería de 5 kWh e inversor de 6 kW, tenemos luz, refri, tele y wifi las 24 horas. La autonomía en días nublados nos sorprendió."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">FV</div>
+          <div>
+            <div class="author-name">Familia Vargas</div>
+            <div class="author-role">Piloto residencial — Zona aislada, Chihuahua</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"El sistema de respaldo para nuestro quirófano se activa en menos de 10 ms. Cumple la NOM-001-SEDE y nos da paz mental ante cualquier corte de CFE. Inversión que se justifica desde la primera contingencia."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">DR</div>
+          <div>
+            <div class="author-name">Dr. Ramírez</div>
+            <div class="author-role">Director Médico — Clínica Premium, Chihuahua</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"El margen del 45-60% y los ingresos recurrentes por pólizas de garantía hacen de este modelo uno de los más rentables que hemos analizado. Recuperación de inversión en 12 meses."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">AC</div>
+          <div>
+            <div class="author-name">Ana Castillo</div>
+            <div class="author-role">Inversionista — Sector Energía, CANACINTRA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════ SECTOR SALUD ═══════════ -->
+<section class="benefits" id="sector-salud" style="background: linear-gradient(180deg, #0d1f35 0%, #0B1A2E 100%);">
+  <div class="section-header">
+    <div class="section-label">Sector Salud — Respaldo Crítico</div>
+    <h2 class="section-title">Energía ininterrumpida<br>para quirófanos</h2>
+    <p class="section-desc">Sistemas LiFePO₄ con conmutación &lt;10ms que cumplen NOM-001-SEDE-2012. Protección real ante cortes de CFE o falla de generador diesel.</p>
+  </div>
+
+  <!-- Propuestas hospitalarias -->
+  <div class="benefits-grid" style="max-width:1200px; margin: 0 auto 3rem;">
+
+    <!-- Propuesta 5 kW -->
+    <div class="benefit-card" style="border-color: rgba(245,166,35,0.2);">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.2rem;">
+        <div class="benefit-icon" style="background:rgba(245,166,35,0.12); font-size:1.6rem;">🏥</div>
+        <span class="benefit-tag" style="background:rgba(245,166,35,0.12); color:var(--solar-amber); font-size:0.8rem;">Clínica / 1 Quirófano</span>
+      </div>
+      <h3 style="font-size:1.3rem; margin-bottom:0.4rem;">Respaldo 5 kW</h3>
+      <p style="color:var(--solar-gray); font-size:0.88rem; line-height:1.6; margin-bottom:1rem;">Cubre cargas CRÍTICAS de 1 sala de operaciones: lámpara cialítica, anestesia, monitores, electrobisturí, bombas de infusión y desfibrilador.</p>
+      <div style="background:rgba(245,166,35,0.06); border:1px solid rgba(245,166,35,0.15); border-radius:12px; padding:1rem; margin-bottom:1rem;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; font-size:0.82rem;">
+          <div><span style="color:var(--solar-gray);">Baterías</span><br><strong>40 kWh (4×10kWh)</strong></div>
+          <div><span style="color:var(--solar-gray);">Inversor</span><br><strong>5 kW continuo</strong></div>
+          <div><span style="color:var(--solar-gray);">Autonomía</span><br><strong>~18 horas</strong></div>
+          <div><span style="color:var(--solar-gray);">Conmutación</span><br><strong>&lt;10 ms ATS</strong></div>
+        </div>
+      </div>
+      <div style="font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:800; background:var(--gradient-sun); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">$426,750 MXN</div>
+      <div style="font-size:0.75rem; color:var(--solar-gray);">Precio lista · Margen 57%</div>
+    </div>
+
+    <!-- Propuesta 10 kW -->
+    <div class="benefit-card" style="border-color: rgba(46,204,113,0.25); box-shadow: 0 0 40px rgba(46,204,113,0.07);">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.2rem;">
+        <div class="benefit-icon" style="background:rgba(46,204,113,0.12); font-size:1.6rem;">🏨</div>
+        <span class="benefit-tag" style="background:rgba(46,204,113,0.15); color:var(--solar-green);">⭐ Recomendado</span>
+      </div>
+      <h3 style="font-size:1.3rem; margin-bottom:0.4rem;">Respaldo 10 kW</h3>
+      <p style="color:var(--solar-gray); font-size:0.88rem; line-height:1.6; margin-bottom:1rem;">Quirófano completo + 2 camas UCI con ventiladores y monitores + refrigerador medicamentos + sistemas IT + iluminación de emergencia.</p>
+      <div style="background:rgba(46,204,113,0.06); border:1px solid rgba(46,204,113,0.2); border-radius:12px; padding:1rem; margin-bottom:1rem;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; font-size:0.82rem;">
+          <div><span style="color:var(--solar-gray);">Baterías</span><br><strong>80 kWh (8×10kWh)</strong></div>
+          <div><span style="color:var(--solar-gray);">Inversor</span><br><strong>16 kW (2×8kW)</strong></div>
+          <div><span style="color:var(--solar-gray);">Autonomía</span><br><strong>~15 horas</strong></div>
+          <div><span style="color:var(--solar-gray);">Conmutación</span><br><strong>&lt;10 ms ATS</strong></div>
+        </div>
+      </div>
+      <div style="font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:800; background:var(--gradient-eco); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">$867,083 MXN</div>
+      <div style="font-size:0.75rem; color:var(--solar-gray);">Precio lista · Margen 57%</div>
+    </div>
+
+    <!-- Escenario Ideal -->
+    <div class="benefit-card" style="border-color: rgba(108,92,231,0.25);">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.2rem;">
+        <div class="benefit-icon" style="background:rgba(108,92,231,0.12); font-size:1.6rem;">🏛️</div>
+        <span class="benefit-tag" style="background:rgba(108,92,231,0.12); color:#A29BFE;">Hospital Premium</span>
+      </div>
+      <h3 style="font-size:1.3rem; margin-bottom:0.4rem;">Respaldo Ideal 32 kW</h3>
+      <p style="color:var(--solar-gray); font-size:0.88rem; line-height:1.6; margin-bottom:1rem;">2 quirófanos completos + 4 camas UCI + todas las áreas críticas de soporte. Respaldo 24h con holgura amplia para hospitales premium 120+ camas.</p>
+      <div style="background:rgba(108,92,231,0.06); border:1px solid rgba(108,92,231,0.2); border-radius:12px; padding:1rem; margin-bottom:1rem;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; font-size:0.82rem;">
+          <div><span style="color:var(--solar-gray);">Baterías</span><br><strong>160 kWh (16×10kWh)</strong></div>
+          <div><span style="color:var(--solar-gray);">Inversor</span><br><strong>32 kW (4×8kW)</strong></div>
+          <div><span style="color:var(--solar-gray);">Autonomía</span><br><strong>24h + holgura</strong></div>
+          <div><span style="color:var(--solar-gray);">ATS Circuitos</span><br><strong>4 circuitos</strong></div>
+        </div>
+      </div>
+      <div style="font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:800; color:#A29BFE;">$1,714,167 MXN</div>
+      <div style="font-size:0.75rem; color:var(--solar-gray);">Precio lista · Margen 57%</div>
+    </div>
+  </div>
+
+  <!-- Normas y garantía -->
+  <div style="max-width:1200px; margin:0 auto;">
+    <div style="background:rgba(17,34,64,0.6); border:1px solid rgba(245,166,35,0.1); border-radius:20px; padding:2rem; display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; text-align:center;">
+      <div>
+        <div style="font-size:1.6rem; margin-bottom:0.4rem;">⚡</div>
+        <div style="font-family:'Outfit',sans-serif; font-weight:700; font-size:0.95rem;">&lt;10 ms</div>
+        <div style="font-size:0.75rem; color:var(--solar-gray);">Conmutación ATS</div>
+      </div>
+      <div>
+        <div style="font-size:1.6rem; margin-bottom:0.4rem;">🔋</div>
+        <div style="font-family:'Outfit',sans-serif; font-weight:700; font-size:0.95rem;">6,000 ciclos</div>
+        <div style="font-size:0.75rem; color:var(--solar-gray);">Batería LiFePO₄</div>
+      </div>
+      <div>
+        <div style="font-size:1.6rem; margin-bottom:0.4rem;">📋</div>
+        <div style="font-family:'Outfit',sans-serif; font-weight:700; font-size:0.95rem;">NOM-001-SEDE</div>
+        <div style="font-size:0.75rem; color:var(--solar-gray);">Normativa cumplida</div>
+      </div>
+      <div>
+        <div style="font-size:1.6rem; margin-bottom:0.4rem;">🛡️</div>
+        <div style="font-family:'Outfit',sans-serif; font-weight:700; font-size:0.95rem;">7 años</div>
+        <div style="font-size:0.75rem; color:var(--solar-gray);">Garantía SYSCOM</div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:2rem;">
+      <p style="color:var(--solar-gray); font-size:0.9rem; margin-bottom:1.2rem;">Un corte en quirófano puede representar <strong style="color:var(--solar-white);">$200,000+ MXN en pérdidas</strong> por procedimiento cancelado, sin contar el riesgo al paciente.</p>
+      <a href="/cdn-cgi/l/email-protection#fd9e9293899c9e8992bdce8592919c8fd39e9290c28e889f97989e89c0be928994879c9e943e4e93d8cfcdaf988e8d9c919992d8cfcdb5928e8d94899c919c8f9492" class="btn-cta">🏥 Solicitar propuesta hospitalaria →</a>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════ PÓLIZAS DE GARANTÍA ═══════════ -->
+<section style="background: var(--solar-dark); padding: 4rem;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center;">
+      <div>
+        <div class="section-label">Post-Venta & Mantenimiento</div>
+        <h2 class="section-title" style="font-size:2.2rem;">Pólizas de garantía<br>extendida</h2>
+        <p class="section-desc" style="margin-top:1rem;">Ingreso recurrente y predecible. Revisiones preventivas incluidas. Detectamos oportunidades de mejora antes de que surjan problemas.</p>
+        <div style="margin-top:2rem; display:flex; flex-direction:column; gap:0.8rem;">
+          <div style="display:flex; align-items:center; gap:0.6rem; color:var(--solar-gray); font-size:0.9rem;">
+            <span style="color:var(--solar-green);">✓</span> Cubre fallas derivadas de la instalación
+          </div>
+          <div style="display:flex; align-items:center; gap:0.6rem; color:var(--solar-gray); font-size:0.9rem;">
+            <span style="color:var(--solar-green);">✓</span> Revisiones preventivas incluidas
+          </div>
+          <div style="display:flex; align-items:center; gap:0.6rem; color:var(--solar-gray); font-size:0.9rem;">
+            <span style="color:var(--solar-green);">✓</span> Monitoreo remoto 24/7 vía app
+          </div>
+          <div style="display:flex; align-items:center; gap:0.6rem; color:var(--solar-gray); font-size:0.9rem;">
+            <span style="color:var(--solar-green);">✓</span> Oportunidades de ampliación detectadas
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <div style="background:var(--gradient-card); border:1px solid rgba(245,166,35,0.15); border-radius:16px; padding:1.4rem; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-weight:700; font-size:0.95rem;">Sistema 1.5 – 3 kW</div>
+            <div style="color:var(--solar-gray); font-size:0.8rem; margin-top:0.2rem;">Residencial básico</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'Outfit',sans-serif; font-weight:800; font-size:1.3rem; color:var(--solar-amber);">$3,500 MXN</div>
+            <div style="font-size:0.72rem; color:var(--solar-gray);">/ año</div>
+          </div>
+        </div>
+        <div style="background:var(--gradient-card); border:1px solid rgba(46,204,113,0.2); border-radius:16px; padding:1.4rem; display:flex; justify-content:space-between; align-items:center; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:0; left:0; right:0; height:2px; background:var(--gradient-eco);"></div>
+          <div>
+            <div style="font-weight:700; font-size:0.95rem;">Sistema 5 – 6 kW</div>
+            <div style="color:var(--solar-gray); font-size:0.8rem; margin-top:0.2rem;">Residencial / PyME</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'Outfit',sans-serif; font-weight:800; font-size:1.3rem; color:var(--solar-green);">$4,500 MXN</div>
+            <div style="font-size:0.72rem; color:var(--solar-gray);">/ año</div>
+          </div>
+        </div>
+        <div style="background:var(--gradient-card); border:1px solid rgba(245,166,35,0.15); border-radius:16px; padding:1.4rem; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-weight:700; font-size:0.95rem;">Sistema 10 kW o más</div>
+            <div style="color:var(--solar-gray); font-size:0.8rem; margin-top:0.2rem;">Comercial / Industrial / Salud</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'Outfit',sans-serif; font-weight:800; font-size:1.3rem; color:var(--solar-amber);">$4,500 MXN</div>
+            <div style="font-size:0.72rem; color:var(--solar-gray);">/ año</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════ BLOG ═══════════ -->
+<section class="blog">
+  <div class="section-header">
+    <div class="section-label">Blog & Tips</div>
+    <h2 class="section-title">Conocimiento que ilumina</h2>
+    <p class="section-desc">Artículos, guías y videos sobre innovación solar y sustentabilidad.</p>
+  </div>
+
+  <div class="blog-grid">
+    <div class="blog-card">
+      <div class="blog-img">
+        <div class="blog-img-inner" style="font-size: 4rem;">🏥</div>
+      </div>
+      <div class="blog-body">
+        <span class="blog-tag">Sector Salud</span>
+        <h3>Respaldo energético para quirófanos: todo lo que necesitas saber antes de cotizar</h3>
+        <p>Desglose técnico completo: consumo real de una sala de operaciones (2,530W pico), cálculo de baterías LiFePO₄ y por qué el ATS médico &lt;10ms es innegociable por NOM-016-SSA3.</p>
+        <div class="blog-meta">
+          <span>15 min lectura</span>
+          <span>•</span>
+          <span>04 Mar 2026</span>
+        </div>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-img">
+        <div class="blog-img-inner">🏠</div>
+      </div>
+      <div class="blog-body">
+        <span class="blog-tag">Caso de Éxito</span>
+        <h3>Piloto en zona aislada: 10 paneles, 5 kWh de batería y autonomía real en Chihuahua</h3>
+        <p>Resultados del primer sistema instalado: 2 kWh/día sin sol, cargas al límite sin fallar y el feedback del cliente. Proceso completo de instalación documentado.</p>
+        <div class="blog-meta">
+          <span>8 min</span>
+          <span>•</span>
+          <span class="blog-video-badge">▶ Video</span>
+        </div>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-img">
+        <div class="blog-img-inner">📈</div>
+      </div>
+      <div class="blog-body">
+        <span class="blog-tag">Negocio Solar</span>
+        <h3>Modelo de ingresos solar: cómo llegar a márgenes del 45-60% con ventas directas y pólizas</h3>
+        <p>Estructura de precios basada en valor, financiamiento bancario para clientes y cómo la póliza anual convierte una venta única en ingresos recurrentes.</p>
+        <div class="blog-meta">
+          <span>10 min lectura</span>
+          <span>•</span>
+          <span>20 Feb 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <a href="#" class="logo" style="margin-bottom: 0.5rem;">
+        <div class="logo-icon">
+          <svg viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="12" fill="url(#sunGrad2)" />
+            <g stroke="url(#rayGrad2)" stroke-width="2" stroke-linecap="round">
+              <line x1="22" y1="2" x2="22" y2="7"/><line x1="22" y1="37" x2="22" y2="42"/>
+              <line x1="2" y1="22" x2="7" y2="22"/><line x1="37" y1="22" x2="42" y2="22"/>
+              <line x1="8" y1="8" x2="11.5" y2="11.5"/><line x1="32.5" y1="32.5" x2="36" y2="36"/>
+              <line x1="36" y1="8" x2="32.5" y2="11.5"/><line x1="11.5" y1="32.5" x2="8" y2="36"/>
+            </g>
+            <defs>
+              <radialGradient id="sunGrad2"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#F5A623"/></radialGradient>
+              <linearGradient id="rayGrad2"><stop offset="0%" stop-color="#F5A623"/><stop offset="100%" stop-color="#FF6B35"/></linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text"><span class="x3">3X</span><span class="olar">olar</span><span class="dot">.com</span></span>
+      </a>
+      <p>Soluciones de energía solar con triple impacto: eficiencia, sustentabilidad y empoderamiento social.</p>
+      <div class="footer-tagline">☀ Energía que transforma</div>
+    </div>
+
+    <div class="footer-section">
+      <h4>Soluciones</h4>
+      <a href="#">Residencial</a>
+      <a href="#">Comercial</a>
+      <a href="#">Industrial</a>
+      <a href="#sector-salud">Sector Salud</a>
+      <a href="#">Comunitario</a>
+      <a href="#">Almacenamiento</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>Empresa</h4>
+      <a href="#">Sobre nosotros</a>
+      <a href="#">Sustentabilidad</a>
+      <a href="#">Carreras</a>
+      <a href="#">Prensa</a>
+      <a href="#">Blog</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>Contacto</h4>
+      <a href="/cdn-cgi/l/email-protection#ff9c90918b9e9c8b90bfcc8790939e8dd19c9092"><span class="__cf_email__" data-cfemail="6c0f0302180d0f18032c5f1403000d1e420f0301">[email&#160;protected]</span></a>
+      <a href="#">+52 (614) [Por confirmar]</a>
+      <a href="#">Chihuahua, Chih., México</a>
+      <div class="social-icons">
+        <a class="social-icon" href="#">f</a>
+        <a class="social-icon" href="#">in</a>
+        <a class="social-icon" href="#">𝕏</a>
+        <a class="social-icon" href="#">ig</a>
+        <a class="social-icon" href="#">yt</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 3Xolar.com — Todos los derechos reservados</span>
+    <span>Aviso de Privacidad · Términos y Condiciones</span>
+  </div>
+</footer>
+
+<!-- ═══════════ BRAND GUIDE PALETTE ═══════════ -->
+<div class="palette-section">
+  <div class="palette-container">
+    <div class="palette-title">Guía de Identidad Visual — Paleta de Colores</div>
+
+    <div class="palette-row">
+      <div class="palette-chip">
+        <div class="palette-color" style="background: #0B1A2E;"></div>
+        <span class="palette-name">Dark Navy</span>
+        <span class="palette-hex">#0B1A2E</span>
+      </div>
+      <div class="palette-chip">
+        <div class="palette-color" style="background: #112240;"></div>
+        <span class="palette-name">Navy</span>
+        <span class="palette-hex">#112240</span>
+      </div>
+      <div class="palette-chip">
+        <div class="palette-color" style="background: #1B3A5C;"></div>
+        <span class="palette-name">Mid Blue</span>
+        <span class="palette-hex">#1B3A5C</span>
+      </div>
+      <div class="palette-chip">
+        <div class="palette-color" style="background: #F5A623;"></div>
+        <span class="palette-name">Solar Amber</span>
+        <span class="palette-hex">#F5A623</span>
+      </div>
+      <div class="palette-chip">
+        <div class="palette-color" style="background: #FF6B35;"></div>
+        <span class="palette-name">Solar Orange</span>
+        <span class="palette-hex">#FF6B35</span>
+      </div>
+      <div class="palette-chip">
+        <div class="palette-color" style="background: #FFD700;"></div>
+        <span class="palette-name">Solar Gold</span>
+        <span class="palette-hex">#FFD700</span>
+      </div>
+      <div class="palette-chip">
+        <div class="palette-color" style="background: #2ECC71;"></div>
+        <span class="palette-name">Eco Green</span>
+        <span class="palette-hex">#2ECC71</span>
+      </div>
+      <div class="palette-chip">
+        <div class="palette-color" style="background: #00B894;"></div>
+        <span class="palette-name">Teal</span>
+        <span class="palette-hex">#00B894</span>
+      </div>
+    </div>
+
+    <div class="typography-showcase">
+      <div class="palette-title" style="margin-bottom: 0.5rem;">Tipografía</div>
+      <div class="typo-row">
+        <div class="typo-sample">
+          <div class="big" style="font-family: 'Outfit', sans-serif;">Outfit Bold</div>
+          <div class="label
