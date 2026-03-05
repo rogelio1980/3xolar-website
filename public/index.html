@@ -1237,99 +1237,35 @@
   /* ═══════════════════════════════════════ */
   /* COLOR PALETTE SHOWCASE                  */
   /* ═══════════════════════════════════════ */
-  .palette-section {
-    background: var(--solar-dark);
-    padding: 4rem;
-    border-top: 1px solid rgba(245,166,35,0.08);
-  }
 
-  .palette-container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
 
-  .palette-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: var(--solar-gray);
-    margin-bottom: 2rem;
-    text-align: center;
-  }
 
-  .palette-row {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
 
-  .palette-chip {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-  }
 
-  .palette-color {
-    width: 72px;
-    height: 72px;
-    border-radius: 16px;
-    border: 2px solid rgba(255,255,255,0.06);
-    transition: transform 0.3s ease;
-  }
+
+
+
+
+
+
 
   .palette-color:hover {
     transform: scale(1.1);
   }
 
-  .palette-name {
-    font-size: 0.7rem;
-    color: var(--solar-light);
-    font-weight: 600;
-  }
 
-  .palette-hex {
-    font-size: 0.65rem;
-    color: var(--solar-gray);
-    font-family: monospace;
-  }
 
-  .typography-showcase {
-    text-align: center;
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(245,166,35,0.06);
-  }
 
-  .typo-row {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    gap: 3rem;
-    margin-top: 1.5rem;
-  }
 
-  .typo-sample {
-    text-align: center;
-  }
 
-  .typo-sample .big {
-    font-size: 2rem;
-    font-weight: 800;
-    letter-spacing: -1px;
-  }
 
-  .typo-sample .label {
-    font-size: 0.7rem;
-    color: var(--solar-gray);
-    margin-top: 0.3rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+
+
+
+
+
+
+
 
   /* ═══════════════════════════════════════ */
   /* RESPONSIVE                              */
@@ -1349,6 +1285,165 @@
     nav { display: none; }
     header { padding: 0.8rem 1.5rem; }
   }
+
+  /* ═══ ENERGY FLOW DIAGRAM ═══ */
+  .hero-right{ position:relative; display:flex; justify-content:center; align-items:center; }
+  .ef-wrap{ display:flex; flex-direction:column; align-items:center; width:480px; gap:0; }
+
+  /* Sun */
+  .ef-sun-block{
+    position:relative; width:160px; height:96px;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-end; padding-bottom:6px;
+  }
+  .ef-sun-aura{
+    position:absolute; top:2px; left:50%; transform:translateX(-50%);
+    width:88px; height:88px; border-radius:50%;
+    background:radial-gradient(circle,rgba(245,166,35,.35) 0%,transparent 70%);
+    animation:efAura 3s ease-in-out infinite;
+  }
+  .ef-sun-core{
+    position:absolute; top:14px; left:50%; transform:translateX(-50%);
+    width:56px; height:56px; border-radius:50%;
+    background:radial-gradient(circle at 38% 34%, #FFE066 0%, #F5A623 55%, #FF6B35 100%);
+    box-shadow:0 0 32px rgba(245,166,35,.8), 0 0 70px rgba(245,166,35,.3);
+    animation:efSunGlow 3s ease-in-out infinite; z-index:2;
+  }
+  .ef-rays-ring{
+    position:absolute; top:42px; left:50%;
+    width:130px; height:130px; transform:translate(-50%,-50%);
+    animation:efSpin 16s linear infinite; z-index:1; pointer-events:none;
+  }
+  .ef-ray{
+    position:absolute; top:50%; left:50%;
+    width:2px; height:30px;
+    background:linear-gradient(to bottom,rgba(245,166,35,.65),transparent);
+    border-radius:2px; transform-origin:top center;
+  }
+  @keyframes efAura{ 0%,100%{transform:translateX(-50%) scale(1);opacity:.7} 50%{transform:translateX(-50%) scale(1.35);opacity:1} }
+  @keyframes efSunGlow{ 0%,100%{box-shadow:0 0 32px rgba(245,166,35,.8),0 0 70px rgba(245,166,35,.3)} 50%{box-shadow:0 0 55px rgba(245,166,35,1),0 0 110px rgba(245,166,35,.45)} }
+  @keyframes efSpin{ from{transform:translate(-50%,-50%) rotate(0deg)} to{transform:translate(-50%,-50%) rotate(360deg)} }
+
+  /* Particles */
+  .ef-particle-field{ position:absolute; inset:0; pointer-events:none; }
+  .ef-particle{
+    position:absolute; bottom:10px; width:4px; height:4px;
+    background:var(--solar-amber); border-radius:50%; opacity:0;
+    animation:efParticle 3.5s ease-in-out infinite;
+  }
+  @keyframes efParticle{
+    0%{transform:translateY(0) scale(0);opacity:0}
+    20%{opacity:.9;transform:translateY(-18px) scale(1)}
+    80%{opacity:.3}
+    100%{transform:translateY(-60px) scale(0);opacity:0}
+  }
+  .ef-sun-label{ font-size:.65rem;color:var(--solar-amber);font-weight:700;text-transform:uppercase;letter-spacing:1px;text-align:center;white-space:nowrap;z-index:3;position:relative; }
+  .ef-sun-label span{ color:#FFD700; }
+
+  /* Vertical connectors */
+  .ef-vert{ width:2px; height:24px; position:relative; overflow:hidden; border-radius:2px; }
+  .ef-vert-amber{ background:linear-gradient(to bottom,rgba(245,166,35,.5),rgba(245,166,35,.1)); }
+  .ef-vert-amber::after{
+    content:'';position:absolute;top:-40%;left:-2px;width:6px;height:40%;border-radius:3px;
+    background:linear-gradient(to bottom,transparent,#F5A623,transparent);
+    animation:efDown 1.1s linear infinite;
+  }
+  .ef-vert-purple{ background:linear-gradient(to bottom,rgba(162,155,254,.5),rgba(162,155,254,.1)); }
+  .ef-vert-purple::after{
+    content:'';position:absolute;top:-40%;left:-2px;width:6px;height:40%;border-radius:3px;
+    background:linear-gradient(to bottom,transparent,#A29BFE,transparent);
+    animation:efDown 1.3s linear infinite;
+  }
+  @keyframes efDown{ 0%{top:-40%} 100%{top:100%} }
+
+  /* Generic node */
+  .ef-node{
+    background:linear-gradient(145deg,rgba(17,34,64,.92),rgba(27,58,92,.55));
+    border:1px solid rgba(245,166,35,.15); border-radius:16px;
+    padding:.85rem .9rem; text-align:center; position:relative; overflow:hidden;
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .ef-node:hover{ transform:translateY(-5px); box-shadow:0 18px 45px rgba(0,0,0,.45); }
+  .ef-node::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    border-radius:16px 16px 0 0;opacity:0;transition:opacity .3s;
+  }
+  .ef-node:hover::before{ opacity:1; }
+  .ef-node-name{ font-family:'Outfit',sans-serif;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-top:.4rem;color:var(--solar-amber); }
+  .ef-node-sub{ font-size:.6rem;color:var(--solar-gray);margin-top:.15rem; }
+  .ef-node-sub span{ font-weight:700; }
+
+  /* Panels */
+  .ef-node-panels{ width:100%;max-width:380px;border-color:rgba(245,166,35,.3); }
+  .ef-node-panels::before{ background:var(--gradient-sun); }
+  .ef-panel-grid{ display:grid;grid-template-columns:repeat(6,1fr);gap:3px;background:rgba(8,20,40,.9);border-radius:7px;padding:6px;border:1px solid rgba(245,166,35,.12); }
+  .ef-cell{
+    aspect-ratio:1;border-radius:2px;
+    background:linear-gradient(135deg,#081428,#163d6b);
+    border:1px solid rgba(245,166,35,.07);position:relative;overflow:hidden;
+  }
+  .ef-cell::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(135deg,transparent 35%,rgba(245,166,35,.14) 50%,transparent 65%);
+    animation:efCellShimmer 3.5s ease-in-out infinite;
+    animation-delay:calc(var(--i,0) * 0.25s);
+  }
+  @keyframes efCellShimmer{ 0%,100%{transform:translateX(-120%) translateY(-120%)} 50%{transform:translateX(120%) translateY(120%)} }
+
+  /* Mid row */
+  .ef-mid-row{ display:flex;align-items:center;justify-content:center;width:100%;max-width:460px; }
+
+  /* Inverter */
+  .ef-node-inv{ flex:1;max-width:200px;border-color:rgba(46,204,113,.4); }
+  .ef-node-inv::before{ background:var(--gradient-eco); }
+  .ef-inv-title{ font-family:'Outfit',sans-serif;font-size:.62rem;font-weight:700;color:var(--solar-green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:.4rem; }
+  .ef-inv-screen{ background:#010d1a;border:1px solid rgba(46,204,113,.3);border-radius:8px;padding:.3rem .4rem; }
+  .ef-inv-stats{ display:flex;justify-content:space-between;font-size:.52rem;color:var(--solar-teal);margin-top:.2rem; }
+  .ef-inv-stats b{ color:#2ECC71; }
+  .ef-inv-badge{ font-size:.5rem;font-weight:700;color:var(--solar-dark);background:linear-gradient(135deg,#2ECC71,#00B894);padding:.12rem .5rem;border-radius:6px;margin-top:.35rem;display:inline-block;letter-spacing:.3px; }
+
+  /* Bidir connector */
+  .ef-bidir-col{ display:flex;flex-direction:column;align-items:center;padding:0 6px;gap:3px;min-width:44px; }
+  .ef-bidir-lbl{ font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;color:var(--solar-green);transition:all .4s;min-height:12px; }
+  #dischargeLabel{ color:var(--solar-teal); }
+  .ef-bidir-lines{ display:flex;gap:5px;height:32px; }
+  .ef-bline{ width:2px;height:100%;position:relative;overflow:hidden;border-radius:2px; }
+  .ef-bline-down{ background:linear-gradient(to bottom,rgba(46,204,113,.5),rgba(46,204,113,.1)); }
+  .ef-bline-down::after{
+    content:'';position:absolute;top:-40%;left:-2px;width:6px;height:40%;border-radius:3px;
+    background:linear-gradient(to bottom,transparent,#2ECC71,transparent);
+    animation:efDown 1s linear infinite;
+  }
+  .ef-bline-up{ background:linear-gradient(to top,rgba(0,184,148,.5),rgba(0,184,148,.1)); }
+  .ef-bline-up::after{
+    content:'';position:absolute;bottom:-40%;left:-2px;width:6px;height:40%;border-radius:3px;
+    background:linear-gradient(to top,transparent,#00B894,transparent);
+    animation:efUp 1.2s linear infinite;
+  }
+  @keyframes efUp{ 0%{bottom:-40%} 100%{bottom:100%} }
+
+  /* Battery */
+  .ef-node-bat{ flex-shrink:0;width:140px;border-color:rgba(46,204,113,.25); }
+  .ef-node-bat::before{ background:var(--gradient-eco); }
+  .ef-bat-outer{ display:flex;align-items:flex-start;justify-content:center;gap:0;margin-bottom:.3rem; }
+  .ef-bat-body{ width:32px;height:52px;background:#010d1a;border:2px solid rgba(46,204,113,.6);border-radius:5px;display:flex;flex-direction:column-reverse;overflow:hidden;position:relative; }
+  .ef-bat-fill{ width:100%;background:linear-gradient(to top,#2ECC71,#00e676);border-radius:3px;transition:height .6s ease;box-shadow:0 0 12px rgba(46,204,113,.5); }
+  .ef-bat-grid{ position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;pointer-events:none; }
+  .ef-bat-grid div{ flex:1;border-bottom:1px solid rgba(0,0,0,.3); }
+  .ef-bat-grid div:last-child{ border:none; }
+  .ef-bat-cap{ width:12px;height:6px;background:rgba(46,204,113,.5);border-radius:0 3px 3px 0;margin-top:22px; }
+
+  /* Loads */
+  .ef-node-loads{ width:100%;max-width:380px;border-color:rgba(162,155,254,.2); }
+  .ef-node-loads::before{ background:linear-gradient(135deg,#6C5CE7,#A29BFE); }
+  .ef-loads-icons{ display:flex;justify-content:center;gap:.7rem;font-size:1.3rem;margin-bottom:.3rem; }
+  .ef-li{ animation:efLiBlink 3.5s ease-in-out infinite; }
+  @keyframes efLiBlink{ 0%,88%,100%{opacity:1;transform:scale(1)} 94%{opacity:.5;transform:scale(.9)} }
+
+  /* CFE */
+  .ef-cfe{ display:flex;align-items:center;gap:.4rem;margin-top:.4rem;background:rgba(11,26,46,.9);border:1px solid rgba(245,166,35,.12);border-radius:20px;padding:.2rem .8rem;font-size:.62rem;color:var(--solar-gray);font-weight:500;white-space:nowrap; }
+  .ef-cfe-dot{ width:6px;height:6px;border-radius:50%;background:var(--solar-green);animation:efCfePulse 2s ease-in-out infinite; }
+  @keyframes efCfePulse{ 0%,100%{box-shadow:0 0 0 0 rgba(46,204,113,.5)} 50%{box-shadow:0 0 0 6px rgba(46,204,113,0)} }
+
 </style>
 </head>
 <body>
@@ -1421,47 +1516,127 @@
       </div>
       <div class="hero-stats">
         <div class="stat-item">
-          <div class="stat-number">500+</div>
-          <div class="stat-label">Instalaciones</div>
+          <div class="stat-number">20+</div>
+          <div class="stat-label">Años Experiencia</div>
         </div>
         <div class="stat-item">
           <div class="stat-number">3X</div>
           <div class="stat-label">Impacto Triple</div>
         </div>
         <div class="stat-item">
-          <div class="stat-number">40%</div>
-          <div class="stat-label">Ahorro Promedio</div>
+          <div class="stat-number">90%+</div>
+          <div class="stat-label">Ahorro Posible</div>
         </div>
       </div>
     </div>
 
     <div class="hero-right">
-      <div class="solar-illustration">
-        <div class="energy-ring"></div>
-        <div class="energy-ring energy-ring-2"></div>
-        <div class="hero-sun">
-          <div class="sun-rays">
-            <div class="sun-ray" style="transform: rotate(0deg) translateY(-40px)"></div>
-            <div class="sun-ray" style="transform: rotate(45deg) translateY(-40px)"></div>
-            <div class="sun-ray" style="transform: rotate(90deg) translateY(-40px)"></div>
-            <div class="sun-ray" style="transform: rotate(135deg) translateY(-40px)"></div>
-            <div class="sun-ray" style="transform: rotate(180deg) translateY(-40px)"></div>
-            <div class="sun-ray" style="transform: rotate(225deg) translateY(-40px)"></div>
-            <div class="sun-ray" style="transform: rotate(270deg) translateY(-40px)"></div>
-            <div class="sun-ray" style="transform: rotate(315deg) translateY(-40px)"></div>
+      <div class="ef-wrap">
+
+        <!-- ☀ SUN: glowing core + spinning rays + floating particles -->
+        <div class="ef-sun-block">
+          <div class="ef-sun-aura"></div>
+          <div class="ef-sun-core"></div>
+          <div class="ef-rays-ring">
+            <div class="ef-ray" style="transform:rotate(0deg) translateY(-46px)"></div>
+            <div class="ef-ray" style="transform:rotate(45deg) translateY(-46px)"></div>
+            <div class="ef-ray" style="transform:rotate(90deg) translateY(-46px)"></div>
+            <div class="ef-ray" style="transform:rotate(135deg) translateY(-46px)"></div>
+            <div class="ef-ray" style="transform:rotate(180deg) translateY(-46px)"></div>
+            <div class="ef-ray" style="transform:rotate(225deg) translateY(-46px)"></div>
+            <div class="ef-ray" style="transform:rotate(270deg) translateY(-46px)"></div>
+            <div class="ef-ray" style="transform:rotate(315deg) translateY(-46px)"></div>
+          </div>
+          <div class="ef-particle-field">
+            <span class="ef-particle" style="left:8%;animation-delay:0s"></span>
+            <span class="ef-particle" style="left:25%;animation-delay:1s;width:3px;height:3px"></span>
+            <span class="ef-particle" style="left:50%;animation-delay:2.2s"></span>
+            <span class="ef-particle" style="left:72%;animation-delay:.7s;width:3px;height:3px"></span>
+            <span class="ef-particle" style="left:90%;animation-delay:1.8s"></span>
+          </div>
+          <div class="ef-sun-label">☀ Radiación Solar &nbsp;·&nbsp; <span id="pvWatts">4.2 kW</span></div>
+        </div>
+
+        <!-- Connector: sun → panels -->
+        <div class="ef-vert ef-vert-amber"></div>
+
+        <!-- PANELES node -->
+        <div class="ef-node ef-node-panels">
+          <div class="ef-panel-grid">
+            <div class="ef-cell" style="--i:0"></div><div class="ef-cell" style="--i:1"></div><div class="ef-cell" style="--i:2"></div>
+            <div class="ef-cell" style="--i:3"></div><div class="ef-cell" style="--i:4"></div><div class="ef-cell" style="--i:5"></div>
+          </div>
+          <div class="ef-node-name">Paneles Bifaciales · 540W DC</div>
+        </div>
+
+        <!-- Connector: panels → inverter+battery row -->
+        <div class="ef-vert ef-vert-amber"></div>
+
+        <!-- MID ROW: Inversor ←→ Batería -->
+        <div class="ef-mid-row">
+
+          <!-- INVERSOR HÍBRIDO -->
+          <div class="ef-node ef-node-inv">
+            <div class="ef-inv-title">⚡ Inversor Híbrido</div>
+            <div class="ef-inv-screen">
+              <svg viewBox="0 0 110 34" preserveAspectRatio="none" style="width:100%;height:34px;display:block;">
+                <polyline id="sineWave"
+                  fill="none" stroke="#2ECC71" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  points="0,17 10,5 20,29 30,5 40,29 50,5 60,29 70,5 80,29 90,5 100,17 110,17"/>
+              </svg>
+              <div class="ef-inv-stats">
+                <span>AC <b id="invHz">60</b>Hz</span>
+                <span><b id="invV">127</b>V</span>
+                <span>η<b id="invEff">97</b>%</span>
+              </div>
+            </div>
+            <div class="ef-inv-badge">MPPT · UPS · GRID-TIE</div>
+          </div>
+
+          <!-- BIDIR connector inverter ↔ battery -->
+          <div class="ef-bidir-col">
+            <span class="ef-bidir-lbl" id="chargeLabel">▼ Cargando</span>
+            <div class="ef-bidir-lines">
+              <div class="ef-bline ef-bline-down"></div>
+              <div class="ef-bline ef-bline-up"></div>
+            </div>
+            <span class="ef-bidir-lbl" id="dischargeLabel"></span>
+          </div>
+
+          <!-- BATERÍA LiFePO₄ -->
+          <div class="ef-node ef-node-bat">
+            <div class="ef-bat-outer">
+              <div class="ef-bat-body">
+                <div class="ef-bat-fill" id="batFill" style="height:82%"></div>
+                <div class="ef-bat-grid">
+                  <div></div><div></div><div></div><div></div>
+                </div>
+              </div>
+              <div class="ef-bat-cap"></div>
+            </div>
+            <div class="ef-node-name" style="color:var(--solar-green)">Batería LiFePO₄</div>
+            <div class="ef-node-sub"><span id="batPct">82</span>% &nbsp;·&nbsp; <span id="batKwh">4.1</span> kWh</div>
           </div>
         </div>
-        <div class="solar-panel-group">
-          <div class="solar-panel">
-            <div class="solar-cell"></div><div class="solar-cell"></div><div class="solar-cell"></div>
-            <div class="solar-cell"></div><div class="solar-cell"></div><div class="solar-cell"></div>
-            <div class="solar-cell"></div><div class="solar-cell"></div><div class="solar-cell"></div>
-            <div class="solar-cell"></div><div class="solar-cell"></div><div class="solar-cell"></div>
-            <div class="solar-cell"></div><div class="solar-cell"></div><div class="solar-cell"></div>
-            <div class="solar-cell"></div><div class="solar-cell"></div><div class="solar-cell"></div>
+
+        <!-- Connector: inverter → loads -->
+        <div class="ef-vert ef-vert-purple"></div>
+
+        <!-- CARGAS AC -->
+        <div class="ef-node ef-node-loads">
+          <div class="ef-loads-icons">
+            <span class="ef-li">💡</span><span class="ef-li" style="animation-delay:.6s">🧊</span><span class="ef-li" style="animation-delay:1.2s">📺</span><span class="ef-li" style="animation-delay:1.8s">💻</span>
           </div>
+          <div class="ef-node-name" style="color:#A29BFE">Cargas AC · Tu Hogar &nbsp;·&nbsp; <span id="loadW">1.4</span> kW</div>
         </div>
-      </div>
+
+        <!-- CFE badge -->
+        <div class="ef-cfe">
+          <span class="ef-cfe-dot"></span> Red CFE (respaldo)
+        </div>
+
+      </div><!-- /.ef-wrap -->
     </div>
   </div>
 </section>
@@ -2096,7 +2271,7 @@
 
     <div style="text-align:center; margin-top:2rem;">
       <p style="color:var(--solar-gray); font-size:0.9rem; margin-bottom:1.2rem;">Un corte en quirófano puede representar <strong style="color:var(--solar-white);">$200,000+ MXN en pérdidas</strong> por procedimiento cancelado, sin contar el riesgo al paciente.</p>
-      <a href="/cdn-cgi/l/email-protection#fd9e9293899c9e8992bdce8592919c8fd39e9290c28e889f97989e89c0be928994879c9e943e4e93d8cfcdaf988e8d9c919992d8cfcdb5928e8d94899c919c8f9492" class="btn-cta">🏥 Solicitar propuesta hospitalaria →</a>
+      <a href="mailto:vargasdahana@gmail.com" class="btn-cta">🏥 Solicitar propuesta hospitalaria →</a>
     </div>
   </div>
 </section>
@@ -2271,8 +2446,8 @@
 
     <div class="footer-section">
       <h4>Contacto</h4>
-      <a href="/cdn-cgi/l/email-protection#ff9c90918b9e9c8b90bfcc8790939e8dd19c9092"><span class="__cf_email__" data-cfemail="6c0f0302180d0f18032c5f1403000d1e420f0301">[email&#160;protected]</span></a>
-      <a href="#">+52 (614) [Por confirmar]</a>
+      <a href="mailto:vargasdahana@gmail.com">vargasdahana@gmail.com</a>
+      <a href="#">+52 (614) 230-7193</a>
       <a href="#">Chihuahua, Chih., México</a>
       <div class="social-icons">
         <a class="social-icon" href="#">f</a>
@@ -2290,57 +2465,37 @@
   </div>
 </footer>
 
-<!-- ═══════════ BRAND GUIDE PALETTE ═══════════ -->
-<div class="palette-section">
-  <div class="palette-container">
-    <div class="palette-title">Guía de Identidad Visual — Paleta de Colores</div>
 
-    <div class="palette-row">
-      <div class="palette-chip">
-        <div class="palette-color" style="background: #0B1A2E;"></div>
-        <span class="palette-name">Dark Navy</span>
-        <span class="palette-hex">#0B1A2E</span>
-      </div>
-      <div class="palette-chip">
-        <div class="palette-color" style="background: #112240;"></div>
-        <span class="palette-name">Navy</span>
-        <span class="palette-hex">#112240</span>
-      </div>
-      <div class="palette-chip">
-        <div class="palette-color" style="background: #1B3A5C;"></div>
-        <span class="palette-name">Mid Blue</span>
-        <span class="palette-hex">#1B3A5C</span>
-      </div>
-      <div class="palette-chip">
-        <div class="palette-color" style="background: #F5A623;"></div>
-        <span class="palette-name">Solar Amber</span>
-        <span class="palette-hex">#F5A623</span>
-      </div>
-      <div class="palette-chip">
-        <div class="palette-color" style="background: #FF6B35;"></div>
-        <span class="palette-name">Solar Orange</span>
-        <span class="palette-hex">#FF6B35</span>
-      </div>
-      <div class="palette-chip">
-        <div class="palette-color" style="background: #FFD700;"></div>
-        <span class="palette-name">Solar Gold</span>
-        <span class="palette-hex">#FFD700</span>
-      </div>
-      <div class="palette-chip">
-        <div class="palette-color" style="background: #2ECC71;"></div>
-        <span class="palette-name">Eco Green</span>
-        <span class="palette-hex">#2ECC71</span>
-      </div>
-      <div class="palette-chip">
-        <div class="palette-color" style="background: #00B894;"></div>
-        <span class="palette-name">Teal</span>
-        <span class="palette-hex">#00B894</span>
-      </div>
-    </div>
-
-    <div class="typography-showcase">
-      <div class="palette-title" style="margin-bottom: 0.5rem;">Tipografía</div>
-      <div class="typo-row">
-        <div class="typo-sample">
-          <div class="big" style="font-family: 'Outfit', sans-serif;">Outfit Bold</div>
-          <div class="label
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var sine=$('sineWave'),batFill=$('batFill'),batPct=$('batPct'),batKwh=$('batKwh'),
+      loadW=$('loadW'),invHz=$('invHz'),invV=$('invV'),invEff=$('invEff'),pvWatts=$('pvWatts');
+  if(!sine) return;
+  var t=0, batLevel=78, charging=true, phaseTimer=0;
+  function tick(){
+    t+=0.018; phaseTimer+=0.018;
+    if(phaseTimer>10){ charging=!charging; phaseTimer=0; }
+    batLevel = charging ? Math.min(97,batLevel+0.025) : Math.max(18,batLevel-0.02);
+    if(batFill) batFill.style.height=batLevel+'%';
+    if(batPct)  batPct.textContent=Math.round(batLevel);
+    if(batKwh)  batKwh.textContent=(5*batLevel/100).toFixed(1);
+    if(pvWatts) pvWatts.textContent=(3.6+Math.sin(t*0.5)*0.8).toFixed(1)+' kW';
+    if(loadW)   loadW.textContent=(1.1+Math.sin(t*1.1)*0.5).toFixed(1);
+    if(invV)    invV.textContent=Math.round(127+Math.sin(t*1.4)*1.5);
+    if(invHz)   invHz.textContent=Math.round(60+Math.sin(t*0.9)*0.2);
+    if(invEff)  invEff.textContent=Math.round(96.5+Math.sin(t*0.6)*0.8);
+    /* animated sine wave */
+    var pts=[]; for(var x=0;x<=110;x+=5){ var y=17-12*Math.sin((x/110)*Math.PI*4+t*7); pts.push(x+','+y.toFixed(2)); }
+    sine.setAttribute('points',pts.join(' '));
+    /* bidir labels */
+    var cl=$('chargeLabel'), dl=$('dischargeLabel');
+    if(cl) cl.textContent = charging ? '▼ Cargando' : '';
+    if(dl) dl.textContent = charging ? '' : '▲ Descargando';
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
